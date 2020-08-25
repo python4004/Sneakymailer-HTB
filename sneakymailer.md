@@ -140,7 +140,7 @@ I found the path to the dev file i tried to to uload revese shell t ftp server b
 ![filezella](https://user-images.githubusercontent.com/36403473/91237690-93624880-e73b-11ea-8283-929a0ff9f91d.png)
 
 i uploaded python rev shell but it doent work so i grep php revese shell from  
-(pentestmonkey)[https://github.com/pentestmonkey/php-reverse-shell]  and uploaded it to server and get access to server.
+[pentestmonkey](https://github.com/pentestmonkey/php-reverse-shell)  and uploaded it to server and get access to server.
 
 ![connected-shell](https://user-images.githubusercontent.com/36403473/91237952-35823080-e73c-11ea-9654-b8b8da9de16f.png)
 
