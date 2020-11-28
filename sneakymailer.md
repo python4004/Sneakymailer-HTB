@@ -118,7 +118,7 @@ email: paulbyrd@sneakymailer.htb
 
 ```
 i tried to login to ftp server by this credential but i failed to login ,i stopped i don't know what to do
-so one of my friend give me a hent.
+so one of my friend give me a hent.</br>
 Hent was to know what microsoft lookup.
 
 So I searched to find a similar package for Linux in this link you will know all package [linux mailer ](https://itsfoss.com/best-email-clients-linux/).
@@ -127,19 +127,19 @@ i login successfully
 
 ![evolution](https://user-images.githubusercontent.com/36403473/91236339-f5b94a00-e737-11ea-922d-3cfc5e96c6fe.png)
 
-i found mail from PaulByrd asked admin to change his name and password 
+I found mail from PaulByrd asked admin to change his name and password 
 `Hello administrator, I want to change this password for the developer account`
-so now i have credintial to login ftp server 
+so now i have credintial to login ftp server. 
 ![ftp-connectd](https://user-images.githubusercontent.com/36403473/91236909-7b89c500-e739-11ea-8176-2c7bb1970b56.png)
 so i downloaded all ftp server files on my pc to explore it comfortably by this command 
 `wget -r -l 10 --ftp-user='developer' --ftp-password='m^AsY7vTKVT+dV1{WOU%@NaHkUAId3]C' ftp://10.10.10.197/`
 ![download-server-file](https://user-images.githubusercontent.com/36403473/91238766-17b5cb00-e73e-11ea-9e42-462e426b7f11.png)
 
-I found the path to the dev file i tried to to uload revese shell t ftp server by curl command bu it doent work so i used `filezilla` to upload revese shell freerly 
+I found the path to the dev file i tried to to upload reverse shell to ftp server by curl command but it didn't work so i used `filezilla` to upload revese shell freerly. 
 
 ![filezella](https://user-images.githubusercontent.com/36403473/91237690-93624880-e73b-11ea-8283-929a0ff9f91d.png)
 
-i uploaded python rev shell but it doent work so i grep php revese shell from  
+I uploaded python reverse shell but it doent work so i grep php reverse shell from  
 [pentestmonkey](https://github.com/pentestmonkey/php-reverse-shell)  and uploaded it to server and get access to server.
 
 ![connected-shell](https://user-images.githubusercontent.com/36403473/91237952-35823080-e73c-11ea-9654-b8b8da9de16f.png)
@@ -153,21 +153,21 @@ The first steps I always take are converting shell to full tty shell
 ``` 
 ### 2-user access
 
-after connecting to server i tried to get `usr.txt` but  can't 
+after connecting to server I tried to get `usr.txt` but  can't 
 ![Screenshot from 2020-10-07 17-39-14](https://user-images.githubusercontent.com/36403473/95354773-1e9b3600-08c5-11eb-91e8-26956bf2b9d8.png)
-so i took developer privilege his password ` m^AsY7vTKVT+dV1{WOU%@NaHkUAId3]C`
+so I took developer privilege his password ` m^AsY7vTKVT+dV1{WOU%@NaHkUAId3]C`
 ![Screenshot from 2020-08-19 14-06-50](https://user-images.githubusercontent.com/36403473/95358441-5b692c00-08c9-11eb-9adc-d10aec84d9ed.png)
-in `/var/www/` directory i found another subdomain `pypi.sneakycorp.htb` so i added it to `etc/hosts` on my machine 
-in `pypi.sneakycorp.htb` directory i found `.hpasswd`.<br/>
-Firstly, i decrypted the hashed password it's MD5(APR)<br/> 
+in `/var/www/` directory I found another subdomain `pypi.sneakycorp.htb`, so i added it to `/etc/hosts` on my machine 
+in `pypi.sneakycorp.htb` directory I found `.hpasswd`.<br/>
+Firstly, I decrypted the hashed password it was MD5(APR)<br/> 
 password after decryption `soufianeelhaoui`<br/>
 
 I now have the privileges to upload my pypi server content
-So I have to look for a suitable Pypi Server. </br>
+So I had to look for a suitable Pypi Server. </br>
 ```
 The idea is to have a pypi server so that we can upload or modify files, etc. So I looked for ways to upload to the pypi server and use it to take the powers of the user.
 ```
-After searching, I found out how to install pypi server
+After searching, I found out how to install pypi server.
 [pypi setup](https://www.linode.com/docs/applications/project-management/how-to-create-a-private-python-package-repository/)
 
 ```
@@ -175,7 +175,7 @@ The idea that I had in mind is to add the private ssh private to an empty auther
 
 ```
 
-i created a package directory in tmp directory :
+I created a package directory in tmp directory :
 ```
         __init__.py
     setup.py
@@ -204,8 +204,8 @@ except :
 )
  
 ```
-by checking machine ports i found port `5000` was used by localhost so lets exploit it.
-then create .pypirc file:
+by checking machine ports, I found port `5000` opend in localhost so lets exploit it.</br>
+create .pypirc file:
 
 ```
 [distutils]
@@ -224,7 +224,7 @@ password: soufianeelhaoui
 ```
 
 ```export HOME=/tmp/python```
-to run `setup.py` we should export python enviroment
+to run `setup.py` we should export python enviroment.
 ![Screenshot from 2020-08-22 02-42-44](https://user-images.githubusercontent.com/36403473/100475972-186b4e00-30ed-11eb-9651-3e16c965d062.png)
 now lets run the exploit and login via ssh 
 ![Screenshot from 2020-08-24 07-04-17](https://user-images.githubusercontent.com/36403473/100479259-591b9500-30f6-11eb-9dfe-c1a43c9c9c53.png)
