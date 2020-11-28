@@ -66,7 +66,7 @@ Nmap done: 1 IP address (1 host up) scanned in 115.24 seconds
 when i visited `http://10.10.10.179` it redirected me to `http://sneakycorp.htb` i added sneakymailer.htb to my `etc/hosts`
 then i discovered the platform.
 i found that this platform contains all Company employees mails in `team.php` page  so i extract all this mails from `Html` page online [extract](http://www.emailx.discoveryvip.com/)
-and looking to the `nmap` result we found that port 25 is open so that `smtp`  so the idea that i have to send phising mail to all of this mails for this i craeate python script to send phising mail 
+and looking to the `nmap` result we found that port 25 is open so that `smtp`  ,so the idea that i have to send phishing mail to all of this mails for this i create python script to send phishing mail 
 ```
 import smtplib 
  
