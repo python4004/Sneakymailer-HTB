@@ -233,9 +233,13 @@ now lets run the exploit and login via ssh
 
 ### 3-root access
 by checking user's privileges ,`low `can run command from `/usr/bin/pip3` 
-so we can get revese shell or anthor way that i use to get root access
+so we can get pip shell or  revese shell to get root access.
+first i tried to make pip shell and it was success.
+got it from here  [pip shell](https://gtfobins.github.io/gtfobins/pip/).
 ```
-tf Command line utility provide many useful operations that we can perform with Team Foundation Server. Here is a list and commands purpose.
+TF=$(mktemp -d)
+echo "import os; os.execl('/bin/sh', 'sh', '-c', 'sh <$(tty) >$(tty) 2>$(tty)')" > $TF/setup.py
+pip install $TF
 ``` 
 by tf Command we can  add news folder and file from file system to TFS Source Control. Need to do check-in before these file can be visible.
 i created temporary file and run the exploit 
